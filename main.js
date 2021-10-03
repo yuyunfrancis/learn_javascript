@@ -1,4 +1,4 @@
-alert('Welcome to Quiz Ninja');
+// alert('Welcome to Quiz Ninja');
 
 const quiz = [
     {
@@ -21,6 +21,15 @@ const view = {
     question: document.getElementById('question'),
     result: document.getElementById('result'),
     info: document.getElementById('info'),
+    start: document.getElementById('start'),
+
+    show(element) {
+        element.Style.display = 'block';
+    },
+
+    hide(element) {
+        element.Style.display = 'none';
+    },
 
     render(target, content, attributes) {
         for (const key in attributes) {
@@ -32,6 +41,7 @@ const view = {
 
 const game = {
     start(quiz) {
+
         this.questions = [...quiz];
         this.score = 0;
 
@@ -40,6 +50,7 @@ const game = {
             this.question = question;
             this.ask();
         }
+        view.hide(view.start);
         // end of main game loop
         this.gameOver();
     },
@@ -66,10 +77,14 @@ const game = {
     },
 
     gameOver() {
+
         view.render(view.info, `Game over, you scored ${this.score}`);
         alert(`Game Over, you scored ${this.score} point${this.score !== 1 ? 's' : ''}`);
+        view.show(view.start);
 
     }
 }
 
-game.start(quiz);
+
+view.start.addEventListener('click', () => game.start(quiz), false);
+// game.start(quiz);
